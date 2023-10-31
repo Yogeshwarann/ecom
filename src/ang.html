@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <style>
+    .hh {
+      height: 690px;
+      width: 400px;
+      border: 3px outset rgb(9, 6, 10);
+      background-color: gray;
+      background-position: no-repeat;
+      text-align: left;
+      margin: 10%;
+      padding: 30px;
+    }
+  </style>
+  <title>HTML FORMS</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+
+<body background="img.jpg" no-repeat ng-controller="myCtrl">
+
+  <form action="/submit-form" method="post" name="f1">
+    <div class="hh">
+      <h1 style="color: rgb(0, 0, 0)">Sign Up</h1>
+
+      Name: <input type="text" placeholder="Enter your first name" required ng-model="fname" pattern="[a-zA-Z]{3,}" autofocus><br><br>
+      Email id: <input type="text" placeholder="Enter your email-address" required ng-model="email"><br><br>
+      Phone number: <input type="text" placeholder="Enter your phone number" name="ph" pattern="[0-9]{10}" ng-model="ph"><br><br>
+      Age: <input type="number" placeholder="Enter your age" name="age" maxlength="3" required ng-model="age"><br><br>
+
+      Gender:<br>
+      <input type="radio" name="gender" value="Male" ng-model="gender"> <label>Male</label><br>
+      <input type="radio" name="gender" value="Female" ng-model="gender"> <label>Female</label><br><br>
+
+      State: <input type="text" required ng-model="sname" pattern="[a-zA-Z]{3,}" autofocus><br><br>
+      Address:<br><br>
+      <textarea name="Address" rows="5" cols="50" placeholder="Enter your address" ng-model="address" required></textarea><br><br>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" ng-model="password"><br><br>
+      <label for="confirm_password">Confirm Password:</label>
+      <input type="password" id="confirm_password" name="confirm_password" ng-model="confirm_password">
+      <p>Already have an account?</p>
+      <a href="login.html">Log in!!</a>
+      <center>
+        <input type="checkbox" id="dec" name="dec" ng-model="dec"> I agree to the terms and conditions<br><br>
+        <input type="submit" value="Submit">
+      </center>
+    </div>
+  </form>
+
+  <script>
+    angular.module('myApp', [])
+      .controller('myCtrl', function($scope) {
+        $scope.fun = function() {
+          if (!$scope.fname) {
+            alert("Name must be filled out");
+            return false;
+          }
+
+          if (!($scope.email && $scope.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/))) {
+            alert("Enter a valid email");
+            return false;
+          }
+
+          if (!$scope.ph || $scope.ph.length !== 10) {
+            alert("Phone number should be of 10 digits");
+            return false;
+          }
+
+          if (!$scope.age) {
+            alert("Age must be filled out");
+            return false;
+          }
+
+          if (!$scope.gender) {
+            alert("Gender must be selected");
+            return false;
+          }
+
+          if (!$scope.sname) {
+            alert("State must be filled");
+            return false;
+          }
+
+          if (!$scope.password) {
+            alert("Password must be filled out");
+            return false;
+          }
+
+          if ($scope.password.length < 8) {
+            alert("Password should be at least 8 characters long");
+            return false;
+          }
+
+          if ($scope.password !== $scope.confirm_password) {
+            alert("Passwords do not match");
+            return false;
+          }
+
+          if (!$scope.dec) {
+            alert("Declaration not done");
+            return false;
+          }
+
+          alert("Registration Successful!");
+        };
+      });
+  </script>
+</body>
+
+</html>
